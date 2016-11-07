@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.views.generic import ListView, TemplateView
 
-# Create your views here.
+from .models import Set
+
+
+class SetListView(ListView):
+    model = Set
+
+
+class LotListView(TemplateView):
+    template_name = "lots/lot_list.html"

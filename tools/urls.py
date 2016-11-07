@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include("lots.api.urls", namespace='lots-api')),
+    url(r'^', include("lots.urls", namespace='lots')),
 ]

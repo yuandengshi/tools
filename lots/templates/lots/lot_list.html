@@ -1,0 +1,50 @@
+{% extends "lots/base.html" %}
+
+{% load staticfiles %}
+
+{% block styles %}
+  <link href="{% static 'lots/lots.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  {% verbatim %}
+  <div class="container" id="lots-app">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        <ol class="list-group">
+          <li class="list-group-item" v-for="lot in lots">{{ lot.name }}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  {% endverbatim %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  new Vue({
+    el: '#lots-app',
+    data: {
+      lots: [
+        {
+          "id": 2,
+          "name": "圆诚",
+          "created": "2016-11-06T11:07:14.415047Z",
+          "updated": "2016-11-06T11:07:14.415078Z",
+          "set": 1
+        },
+        {
+          "id": 1,
+          "name": "圆灯",
+          "created": "2016-11-06T11:06:57.809921Z",
+          "updated": "2016-11-06T11:06:57.809955Z",
+          "set": 1
+        }
+      ]
+    }
+  })
+  </script>
+{% endblock %}
