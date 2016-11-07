@@ -9,26 +9,33 @@
 {% block content %}
   {% verbatim %}
   <div class="container" id="lots-app">
-
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Panel title</h3>
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">签</h3>
+          </div>
+          <div class="panel-body">
+            <ol class="list-group">
+              <li class="list-group-item" v-for="lot in lots">{{ lot.name }}</li>
+            </ol>
+          </div>
+        </div>
       </div>
-      <div class="panel-body">
-        <ol class="list-group">
-          <li class="list-group-item" v-for="lot in lots">{{ lot.name }}</li>
-        </ol>
-      </div>
-    </div>
 
-    <button type="button" class="btn btn-primary" v-on:click="draw">抽签</button>
-
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">结果</h3>
+      <div class="col-sm-2">
+        <button type="button" class="btn btn-info btn-block" v-on:click="draw">抽签</button>
       </div>
-      <div class="panel-body">
-        <p v-if="result">{{ result.name }}</p>
+
+      <div class="col-sm-5">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">结果</h3>
+          </div>
+          <div class="panel-body">
+            <p v-if="result">{{ result.name }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -37,27 +44,22 @@
 {% endblock %}
 
 {% block scripts %}
-  <script>
-  new Vue({
+<script>
+Vue.use(VueResource);
+
+new Vue({
     el: '#lots-app',
-    data: {
-      lots: [
-        {
-          "id": 2,
-          "name": "圆诚",
-          "created": "2016-11-06T11:07:14.415047Z",
-          "updated": "2016-11-06T11:07:14.415078Z",
-          "set": 1
-        },
-        {
-          "id": 1,
-          "name": "圆灯",
-          "created": "2016-11-06T11:06:57.809921Z",
-          "updated": "2016-11-06T11:06:57.809955Z",
-          "set": 1
+    created: function() {
+      this.$http.get('api/sets/1/lots/').then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          this.lots = response.data;
         }
-      ],
-      result: null,
+      });
+    },
+    data: {
+      lots : [],
+      result: {},
     },
     methods: {
       draw() {
@@ -66,5 +68,5 @@
       }
     }
   });
-  </script>
+</script>
 {% endblock %}
