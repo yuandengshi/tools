@@ -19,7 +19,7 @@
           </div>
           <div id="lots-collapse" class="panel-collapse collapse">
             <ul class="list-group">
-              <li class="list-group-item" v-for="lot in lots">{{ lot.name }}</li>
+              <li class="list-group-item" v-for="lot in orderedLots">{{ lot.name }}</li>
             </ul>
           </div>
         </div>
@@ -64,6 +64,11 @@ new Vue({
     data: {
       lots : [],
       results: [],
+    },
+    computed: {
+      orderedLots: function () {
+        return _.orderBy(this.lots, 'id')
+      }
     },
     methods: {
       draw() {
